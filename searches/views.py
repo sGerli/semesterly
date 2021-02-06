@@ -45,9 +45,9 @@ class CourseSearchList(CsrfExemptMixin, ValidateSubdomainMixin, APIView):
 
         # sorts queries by course number through a comparator
         def course_comparator(course1, course2):
-            #isolate course number from XX.XXX.XXX
-            c1=int(str(course1)[7:10])
-            c2=int(str(course2)[7:10])
+            #isolate course number from XX0000
+            c1=int(str(course1)[2:6])
+            c2=int(str(course2)[2:6])
             if c1 < c2:
                 return -1
             elif c1 > c2:
