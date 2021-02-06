@@ -10,7 +10,6 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
-
 import operator
 
 from django.core.paginator import Paginator, EmptyPage
@@ -28,6 +27,7 @@ from student.models import Student
 from student.utils import get_student
 from timetable.models import Semester
 from helpers.mixins import ValidateSubdomainMixin, CsrfExemptMixin
+from functools import reduce, cmp_to_key
 
 
 class CourseSearchList(CsrfExemptMixin, ValidateSubdomainMixin, APIView):
@@ -57,7 +57,7 @@ class CourseSearchList(CsrfExemptMixin, ValidateSubdomainMixin, APIView):
         course_match_objs = baseline_search(request.subdomain, query, sem).distinct()
         #only sort if results is less than 100 for efficiency sake
         if len(course_match_objs) < 100:
-            course_match_objs = sorted(course_match_objs, cmp=course_comparator)
+            course_match_objs = sorted(course_match_objs, key=cmp_to_key(course_comparator))
         #display only 12 courses to avoid displaying too many.
         course_match_objs = course_match_objs[:12]
         save_analytics_course_search(query[:200], course_match_objs[:2], sem, request.subdomain,
@@ -105,7 +105,7 @@ class CourseSearchList(CsrfExemptMixin, ValidateSubdomainMixin, APIView):
                                      get_student(request),
                                      advanced=True)
         student = None
-        logged = request.user.is_authenticated()
+        logged = request.user.is_authenticated
         if logged and Student.objects.filter(user=request.user).exists():
             student = Student.objects.get(user=request.user)
         serializer_context = {'semester': sem, 'student': student, 'school': request.subdomain}
