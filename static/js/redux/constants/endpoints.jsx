@@ -38,13 +38,16 @@ export const getIntegrationEndpoint = (integrationId, courseId) => `/integration
 export const getFinalExamSchedulerEndpoint = () => '/exams/';
 export const getRequestShareExamLinkEndpoint = () => '/exams/links/';
 export const acceptTOSEndpoint = () => '/tos/accept/';
-export function getCourseShareLinkFromModal(code, semester) {
-  return `/course/${encodeURIComponent(code)}/${semester.name}/${semester.year}`;
-}
 
 export function getCourseShareLink(code, semester) {
-  return `${window.location.href.split('/')[2]}/course/${encodeURIComponent(code)}/${semester.name}/${semester.year}`;
+  return `${window.location.protocol}//${window.location.href.split('/')[2]}/course/${encodeURIComponent(code)}/${semester.name}/${semester.year}`;
 }
+
+export function getCourseShareLinkFromModal(code, semester) {
+  return getCourseShareLink(code, semester);
+}
+
 export function getExamShareLink(hash) {
-  return `${window.location.href.split('/')[2]}/exams/links/${encodeURIComponent(hash)}/`;
+  return `${window.location.protocol}//${window.location.href.split('/')[2]}/exams/links/${encodeURIComponent(hash)}/`;
 }
+
