@@ -14,11 +14,11 @@ from datetime import datetime, timedelta
 import json
 
 import httplib2
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db.models import Q, Count
 from django.forms.models import model_to_dict
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render_to_response, render
+from django.shortcuts import get_object_or_404, render
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
 from googleapiclient import discovery
@@ -163,8 +163,7 @@ class UserView(RedirectToSignupMixin, APIView):
             if r[0] not in context:
                 context[r[0]] = 0
             context['total'] += context[r[0]]
-        return render_to_response("profile.html", context,
-                                  context_instance=RequestContext(request))
+        return render(request, "profile.html", context)
 
     def patch(self, request):
         """
@@ -229,9 +228,9 @@ class UserTimetableView(ValidateSubdomainMixin,
             duplicate.pk = None  # creates duplicate of object
             duplicate.name = new_name
             duplicate.save()
-            duplicate.courses = courses
-            duplicate.sections = sections
-            duplicate.events = events
+            duplicate.courses.set(courses)
+            duplicate.sections.set(sections)
+            duplicate.events.set(events)
 
             response = {
                 'timetables': get_student_tts(student, school, semester),
@@ -360,7 +359,7 @@ class ClassmateView(ValidateSubdomainMixin, RedirectToSignupMixin, APIView):
         if request.query_params.get('count'):
             school = request.subdomain
             student = Student.objects.get(user=request.user)
-            course_ids = map(int, request.query_params.getlist('course_ids[]'))
+            course_ids = list(map(int, request.query_params.getlist('course_ids[]')))
             semester, _ = Semester.objects.get_or_create(
                 name=sem_name, year=year)
             total_count = 0
@@ -381,7 +380,7 @@ class ClassmateView(ValidateSubdomainMixin, RedirectToSignupMixin, APIView):
         elif request.query_params.getlist('course_ids[]'):
             school = request.subdomain
             student = Student.objects.get(user=request.user)
-            course_ids = map(int, request.query_params.getlist('course_ids[]'))
+            course_ids = list(map(int, request.query_params.getlist('course_ids[]')))
             semester, _ = Semester.objects.get_or_create(
                 name=sem_name, year=year)
             # user opted in to sharing courses

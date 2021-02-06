@@ -1,4 +1,4 @@
-FROM jhuopensource/semesterly-base:latest
+FROM  sgerli/horariotec-base:latest
 
 RUN mkdir /code
 WORKDIR /code
@@ -6,7 +6,6 @@ WORKDIR /code
 # Just adding basics
 # ADD ./requirements.txt /code/
 # ADD ./package.json /code/
-
 # Add everything
 ADD . /code/
 

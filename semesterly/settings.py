@@ -45,7 +45,7 @@ def get_secret(key):
             return SECRETS[key]
         except:
             try:
-                from dev_credentials import SECRETS
+                from .dev_credentials import SECRETS
                 return SECRETS[key]
             except:
                 raise ValueError("""'%s' not correctly configured.
@@ -64,7 +64,7 @@ ALLOWED_HOSTS = ['*']
 
 SOCIAL_AUTH_FACEBOOK_SCOPE = [
     'email',
-    'user_friends',
+#    'user_friends',
 ]
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
     'fields': 'id,name,email'
@@ -192,7 +192,7 @@ REST_FRAMEWORK ={
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -202,18 +202,6 @@ MIDDLEWARE_CLASSES = (
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'semesterly.middleware.subdomain_middleware.SubdomainMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
-)
-
-TEMPLATE_CONTEXT_PROCESSORS = (
-   'django.contrib.auth.context_processors.auth',
-   'django.core.context_processors.debug',
-   'django.core.context_processors.i18n',
-   'django.core.context_processors.media',
-   'django.core.context_processors.static',
-   'django.core.context_processors.tz',
-   'django.contrib.messages.context_processors.messages',
-   'social_django.context_processors.backends',
-   'social_django.context_processors.login_redirect',
 )
 
 AUTHENTICATION_BACKENDS = (
@@ -236,7 +224,7 @@ WSGI_APPLICATION = 'semesterly.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': '',  # os.path.join(BASE_DIR, 'db.postgresql')
+        'NAME': os.path.join(BASE_DIR, 'db.postgresql'),  # os.path.join(BASE_DIR, 'db.postgresql')
         'USER': '',
         'PASSWORD': '',
         'HOST': 'localhost',
@@ -302,15 +290,29 @@ STATICFILES_DIRS = (
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-)
-
-TEMPLATE_DIRS = (
-    os.path.join(PROJECT_DIRECTORY,'templates/'),
-    os.path.join(PROJECT_DIRECTORY,'semesterly/templates/'),
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            os.path.join(PROJECT_DIRECTORY,'templates/'),
+            os.path.join(PROJECT_DIRECTORY,'semesterly/templates/'),
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
+            ],
+        },
+    },
+]
 
 # Caching
 CACHES = {
@@ -322,7 +324,7 @@ CACHES = {
 CACHALOT_ENABLED = True
 
 try:
-    from local_settings import *
+    from .local_settings import *
 except:
     pass
 
