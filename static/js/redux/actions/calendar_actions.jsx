@@ -79,7 +79,7 @@ export const fetchShareTimetableLink = () => (dispatch, getState) => {
   })
   .then(response => response.json())
   .then((ref) => {
-    dispatch(receiveShareLink(`${window.location.href.split('/')[2]}/timetables/links/${ref.slug}`));
+    dispatch(receiveShareLink(`${window.location.protocol}//${window.location.href.split('/')[2]}/timetables/links/${ref.slug}`));
   });
 };
 
