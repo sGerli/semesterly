@@ -169,8 +169,10 @@ class Semesterly extends React.Component {
               <p className="data-last-updated no-print">Data last
                 updated: { this.props.dataLastUpdated && this.props.dataLastUpdated.length && this.props.dataLastUpdated !== 'null' ? this.props.dataLastUpdated : null }</p>
               <ul className="nav nav-pills no-print">
-              <li className="footer-button" role="presentation">
+                <li className="footer-button" role="presentation">
                   <a href="https://semester.ly">Powered by Semester.ly</a>
+                </li><li className="footer-button" role="presentation">
+                  <a href="https://sgerli.me">Maintained by Stefano Gerli</a>
                 </li>
                 <li className="footer-button" role="presentation">
                   <a href="/termsofservice">Terms</a>
