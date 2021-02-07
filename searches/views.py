@@ -85,7 +85,7 @@ class CourseSearchList(CsrfExemptMixin, ValidateSubdomainMixin, APIView):
             course_match_objs = course_match_objs.filter(level__in=filters.get('levels'))
         if filters.get('times'):
             day_map = {"Monday": "M", "Tuesday": "T", "Wednesday": "W", "Thursday": "R",
-                       "Friday": "F"}
+                       "Friday": "F", "Saturday": "S", "Sunday": "U"}
             course_match_objs = course_match_objs.filter(
                 reduce(operator.or_,
                        (Q(section__offering__time_start__gte="{0:0=2d}:00".format(min_max['min']),
