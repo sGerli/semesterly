@@ -17,9 +17,9 @@ export const MAX_TIMETABLE_NAME_LENGTH = 30; // Length of "This is my fucking ti
 
 export const DAYS = ['M', 'T', 'W', 'R', 'F', 'S', 'U'];
 
-export const FULL_WEEK_LIST = ['U', 'M', 'T', 'W', 'R', 'F', 'S'];
+export const FULL_WEEK_LIST = ['M', 'T', 'W', 'R', 'F', 'S', 'U'];
 
-export const VERBOSE_DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+export const VERBOSE_DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
 export const DRAG_TYPES = {
   DRAG: 'drag', // drag a custom slot to a new location

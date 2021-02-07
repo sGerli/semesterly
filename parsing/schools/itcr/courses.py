@@ -132,7 +132,7 @@ class Parser(BaseParser):
             self.ingestor['section'] = str(meeting["IDE_GRUPO"])
             self.ingestor['instrs'] = meeting["NOM_PROFESOR"]
 
-            self.ingestor['type'] = meeting["TIPO_CURSO"]
+            self.ingestor['section_type'] = meeting["TIPO_CURSO"]
 
             self.ingestor['size'] = 1
             self.ingestor['enrollment'] = 0

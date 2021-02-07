@@ -339,8 +339,9 @@ class CourseModalBody extends React.Component {
 
     const creditsSuffix = numCredits === 1 ? ' credit' : ' credits';
     const avgRating = evalInfo.reduce((sum, e) => sum + parseFloat(e.score), 0) / evalInfo.length;
-    const showCapacityAttention = this.props.popularityPercent > 60;
-    const attentioncapacityTracker = (
+    // NOTE: Disabled capacity tracker because theres no capacity info from itcr
+    // const showCapacityAttention = this.props.popularityPercent > 60;
+    /*const attentioncapacityTracker = (
       <div className="capacity">
         <div className="capacity__attention">
           <div className="attention__tag">
@@ -364,7 +365,7 @@ class CourseModalBody extends React.Component {
           <span>{parseInt(this.props.popularityPercent, 10)}% of Seats Added on Semesterly</span>
         </div>
       </div>
-        );
+        );*/
     return (
       <div className="modal-body">
         <div className="cf">
@@ -384,12 +385,12 @@ class CourseModalBody extends React.Component {
                 </div>
               </div>
             </div>
-            { !showCapacityAttention &&
+            { /*!showCapacityAttention &&
                         capacityTracker
                         }
             { showCapacityAttention && this.state.mobile &&
                         attentioncapacityTracker
-                        }
+            */}
             { prerequisitesDisplay }
             { areasDisplay }
             { academicSupportDisplay }
@@ -397,9 +398,9 @@ class CourseModalBody extends React.Component {
             { hasTakenDisplay }
           </div>
           <div className="col-8-16">
-            { showCapacityAttention && !this.state.mobile &&
+            { /*showCapacityAttention && !this.state.mobile &&
                         attentioncapacityTracker
-                        }
+            */}
             <h3 className="modal-module-header">Reactions</h3>
             <p>Check out your classmate&apos;s reactions – click an emoji to add your own
                             opinion!</p>

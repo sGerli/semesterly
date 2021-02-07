@@ -434,7 +434,7 @@ Calendar.propTypes = {
   saving: PropTypes.bool.isRequired,
   shareLink: PropTypes.string,
   uses12HrTime: PropTypes.bool.isRequired,
-  registrarSupported: PropTypes.bool.isRequired,
+  registrarSupported: PropTypes.bool,
 };
 
 export default Calendar;
