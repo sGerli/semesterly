@@ -173,11 +173,13 @@
 
 // List wrapper for each search result course
 .search-results__list-container {
-  position: absolute;
-  width: 66.3%;
   overflow-y: auto;
   height: 100%;
   min-height: 232px;
+  @media (min-width: 767px) {
+    position: absolute;
+    width: 66.3%;
+  }
 }
 
 // Each Course that is listed in the Search Results
