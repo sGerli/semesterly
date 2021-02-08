@@ -203,7 +203,7 @@ class DayCalendar extends React.Component {
       onClick={() => this.setState({ day: i })}
     >
       <div className={classnames('day-circle', { selected: i === this.state.day })}>
-        {day === 'R' ? 'T' : day}
+        {day === 'R' ? 'T' : (day === 'U' ? 'S' : day)}
       </div>
     </div>));
     const saveToCalendarButton = (
