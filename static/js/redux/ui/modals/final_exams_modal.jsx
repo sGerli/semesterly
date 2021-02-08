@@ -21,6 +21,7 @@ import COLOUR_DATA from '../../constants/colours';
 import { ShareLink } from '../master_slot';
 import { getExamShareLink } from '../../constants/endpoints';
 import * as SemesterlyPropTypes from '../../constants/semesterlyPropTypes';
+import { CALENDAR_START_HOUR } from '../../constants/constants';
 
 const InSlot = (props) => {
   let displayTime = (props.time) ? <h3 className="time">{ props.time }</h3> : null;
@@ -29,7 +30,7 @@ const InSlot = (props) => {
   if (displayTime) {
     const time = (props.time.split(' '))[1];
     let beginTime = (time.split('-'))[0];
-    beginTime += beginTime > 8 && beginTime < 12 ? 'am' : 'pm';
+    beginTime += beginTime > CALENDAR_START_HOUR && beginTime < 12 ? 'am' : 'pm';
     let endTime = (time.split('-'))[1];
     endTime += 'pm';
     displayTime = <h3 className="time">{ `${beginTime}-${endTime}` }</h3>;

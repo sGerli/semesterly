@@ -17,7 +17,7 @@ import React from 'react';
 import Radium, { StyleRoot } from 'radium';
 import { DropTarget } from 'react-dnd';
 import COLOUR_DATA from '../constants/colours';
-import { DRAG_TYPES, HALF_HOUR_HEIGHT } from '../constants/constants';
+import { CALENDAR_START_HOUR, DRAG_TYPES, HALF_HOUR_HEIGHT } from '../constants/constants';
 import * as SemesterlyPropTypes from '../constants/semesterlyPropTypes';
 
 function convertToHalfHours(str) {
@@ -149,9 +149,9 @@ class Slot extends React.Component {
     const endHour = parseInt(this.props.time_end.split(':')[0], 10);
     const endMinute = parseInt(this.props.time_end.split(':')[1], 10);
 
-    const top = (((startHour - 8) * ((HALF_HOUR_HEIGHT * 2) + 2))) +
+    const top = (((startHour - CALENDAR_START_HOUR) * ((HALF_HOUR_HEIGHT * 2) + 2))) +
       ((startMinute) * (HALF_HOUR_HEIGHT / 30));
-    const bottom = ((((endHour - 8) * ((HALF_HOUR_HEIGHT * 2) + 2))) +
+    const bottom = ((((endHour - CALENDAR_START_HOUR) * ((HALF_HOUR_HEIGHT * 2) + 2))) +
       ((endMinute) * (HALF_HOUR_HEIGHT / 30))) - 1;
     // the cumulative width of this slot and all of the slots it is conflicting with
     const totalSlotWidth = 100 - (7 * this.props.depth_level);

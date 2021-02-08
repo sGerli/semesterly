@@ -19,7 +19,7 @@ import Swipeable from 'react-swipeable';
 import PaginationContainer from './containers/pagination_container';
 import SlotManagerContainer from './containers/slot_manager_container';
 import CellContainer from './containers/cell_container';
-import { DAYS } from '../constants/constants';
+import { CALENDAR_START_HOUR, DAYS } from '../constants/constants';
 import { ShareLink } from './master_slot';
 
 const Row = (props) => {
@@ -93,10 +93,10 @@ class DayCalendar extends React.Component {
   getTimelineStyle() {
     const now = new Date();
     // don't show line if the current time is before 8am or after the schedule end
-    if (now.getHours() > this.props.endHour || now.getHours() < 8) {
+    if (now.getHours() > this.props.endHour || now.getHours() < CALENDAR_START_HOUR) {
       return { display: 'none' };
     }
-    const diff = Math.abs(new Date() - new Date().setHours(8, 0, 0));
+    const diff = Math.abs(new Date() - new Date().setHours(CALENDAR_START_HOUR, 0, 0));
     const mins = Math.ceil((diff / 1000) / 60);
     const top = (mins / 15.0) * 13;
     return { top, zIndex: 1 };
@@ -104,7 +104,7 @@ class DayCalendar extends React.Component {
 
   getCalendarRows() {
     const rows = [];
-    for (let i = 8; i <= this.props.endHour; i++) { // one row for each hour, starting from 8am
+    for (let i = CALENDAR_START_HOUR; i <= this.props.endHour; i++) { // one row for each hour, starting from 8am
       const hour = this.props.uses12HrTime && i > 12 ? i - 12 : i;
       rows.push(<Row
         displayTime={`${hour}:00`}
@@ -203,7 +203,7 @@ class DayCalendar extends React.Component {
       onClick={() => this.setState({ day: i })}
     >
       <div className={classnames('day-circle', { selected: i === this.state.day })}>
-        {day === 'R' ? 'T' : day}
+        {day === 'R' ? 'T' : (day === 'U' ? 'S' : day)}
       </div>
     </div>));
     const saveToCalendarButton = (

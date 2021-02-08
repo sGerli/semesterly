@@ -213,7 +213,7 @@ class ExplorationModal extends React.Component {
             availableDays.indexOf(a) - availableDays.indexOf(b)
         ));
     const times = [...this.state.times, {
-      min: 8,
+      min: CALENDAR_START_HOUR,
       max: 24,
       day,
     }];

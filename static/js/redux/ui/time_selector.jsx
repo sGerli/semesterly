@@ -15,6 +15,7 @@ GNU General Public License for more details.
 import PropTypes from 'prop-types';
 import React from 'react';
 import InputRange from 'react-input-range';
+import { CALENDAR_START_HOUR } from '../constants/constants';
 
 class TimeSelector extends React.Component {
 
@@ -33,7 +34,7 @@ class TimeSelector extends React.Component {
       <InputRange
         day={day}
         maxValue={24}
-        minValue={8}
+        minValue={CALENDAR_START_HOUR}
         value={value}
         onChange={onChange}
         onChangeComplete={onChangeComplete}
