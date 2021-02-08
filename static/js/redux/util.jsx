@@ -15,6 +15,7 @@ GNU General Public License for more details.
 import range from 'lodash/range';
 import { getLogFinalExamViewEndpoint } from './constants/endpoints';
 import COLOUR_DATA from './constants/colours';
+import { CALENDAR_START_HOUR } from './constants/constants';
 
 export const browserSupportsLocalStorage = () => {
   try {
@@ -124,7 +125,7 @@ export const getMaxHourBasedOnWindowHeight = () => {
   if (!lastRowY) {
     return 0;
   }
-  const lastHour = 7 + (calRow.length / 2);
+  const lastHour = CALENDAR_START_HOUR - 1 + (calRow.length / 2);
   const hourHeight = calRow.height() * 2;
   const maxHour = parseInt(lastHour +
     (($(document).height() - 250 - lastRowY.top) / hourHeight), 10);

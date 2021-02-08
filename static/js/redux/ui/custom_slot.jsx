@@ -15,7 +15,7 @@ GNU General Public License for more details.
 import PropTypes from 'prop-types';
 import React from 'react';
 import { DragSource, DropTarget } from 'react-dnd';
-import { DRAG_TYPES, HALF_HOUR_HEIGHT } from '../constants/constants';
+import { CALENDAR_START_HOUR, DRAG_TYPES, HALF_HOUR_HEIGHT } from '../constants/constants';
 
 
 function convertToHalfHours(str) {
@@ -152,9 +152,9 @@ class CustomSlot extends React.Component {
     const endHour = parseInt(this.props.time_end.split(':')[0], 10);
     const endMinute = parseInt(this.props.time_end.split(':')[1], 10);
 
-    const top = ((startHour - 8) * ((HALF_HOUR_HEIGHT * 2) + 2)) +
+    const top = ((startHour - CALENDAR_START_HOUR) * ((HALF_HOUR_HEIGHT * 2) + 2)) +
       ((startMinute) * (HALF_HOUR_HEIGHT / 30));
-    const bottom = ((endHour - 8) * ((HALF_HOUR_HEIGHT * 2) + 2)) +
+    const bottom = ((endHour - CALENDAR_START_HOUR) * ((HALF_HOUR_HEIGHT * 2) + 2)) +
       (((endMinute) * (HALF_HOUR_HEIGHT / 30)) - 1);
     if (this.props.preview) { // don't take into account conflicts, reduce opacity, increase z-index
       return {

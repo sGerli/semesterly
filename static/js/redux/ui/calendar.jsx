@@ -20,7 +20,7 @@ import Clipboard from 'clipboard';
 import PaginationContainer from './containers/pagination_container';
 import SlotManagerContainer from './containers/slot_manager_container';
 import CellContainer from './containers/cell_container';
-import { DAYS } from '../constants/constants';
+import { CALENDAR_START_HOUR, DAYS } from '../constants/constants';
 import { ShareLink } from './master_slot';
 
 const Row = (props) => {
@@ -90,13 +90,13 @@ class Calendar extends React.Component {
   getTimelineStyle() {
     const now = new Date();
     if (now.getHours() > this.props.endHour ||  // if the current time is before
-        now.getHours() < 8 ||// 8am or after the schedule end
+        now.getHours() < CALENDAR_START_HOUR ||// 7am or after the schedule end
         now.getDay() === 0 || // time or if the current day is
         now.getDay() === 6    // Saturday or Sunday, then
         ) { // display no line
       return { display: 'none' };
     }
-    const diff = Math.abs(new Date() - new Date().setHours(8, 0, 0));
+    const diff = Math.abs(new Date() - new Date().setHours(CALENDAR_START_HOUR, 0, 0));
     const mins = Math.ceil((diff / 1000) / 60);
     const top = (mins / 15.0) * 13;
     return { top, zIndex: 1 };
@@ -104,7 +104,7 @@ class Calendar extends React.Component {
 
   getCalendarRows() {
     const rows = [];
-    for (let i = 8; i <= this.props.endHour; i++) { // one row for each hour, starting from 8am
+    for (let i = CALENDAR_START_HOUR; i <= this.props.endHour; i++) { // one row for each hour, starting from 7am
       const hour = this.props.uses12HrTime && i > 12 ? i - 12 : i;
       rows.push(<Row
         displayTime={`${hour}:00`}
