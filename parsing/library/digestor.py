@@ -635,7 +635,7 @@ class Vommit(DigestionStrategy):
         defaults = {}
         for model_name, model in list(models.items()):
             defaults[model_name] = {}
-            for field in model._meta.get_all_field_names():
+            for field in model._meta.get_fields():
                 try:
                     default = model._meta.get_field_by_name(field)[0].default
                 except AttributeError:
