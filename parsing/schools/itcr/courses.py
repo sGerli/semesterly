@@ -11,7 +11,6 @@
 # GNU General Public License for more details.
 
 
-
 import json
 
 
@@ -29,7 +28,6 @@ class Parser(BaseParser):
     Attributes:
         API_URL (str): Description
         DAY_MAP (TYPE): Description
-        KEY (str): Description
         last_course (dict): Description
         schools (list): Description
         semester (TYPE): Description
@@ -57,7 +55,7 @@ class Parser(BaseParser):
         return new_instance
 
     def __init__(self, **kwargs):
-        """Construct hopkins parser object."""
+        """Construct itcr parser object."""
         self.schools = []
         self.last_course = {}
         super(Parser, self).__init__('itcr', **kwargs)
@@ -66,21 +64,23 @@ class Parser(BaseParser):
         headers = {
             'Content-Type': 'application/json'
         }
-        request = self.requester.post(Parser.API_URL + 'cargaEscuelas', data="{}", headers=headers, verify=False)
+        request = self.requester.post(
+            Parser.API_URL + 'cargaEscuelas', data="{}", headers=headers, verify=False)
         self.schools = json.loads(request['d'])
 
     def _get_courses(self, school):
         headers = {
             'Content-Type': 'application/json'
         }
-        payload = json.dumps({'escuela': school['IDE_DEPTO'], 'ano': self.year})
-        request = self.requester.post(Parser.API_URL + 'getdatosEscuelaAno', data=payload, headers=headers, verify=False)
+        payload = json.dumps(
+            {'escuela': school['IDE_DEPTO'], 'ano': self.year})
+        request = self.requester.post(
+            Parser.API_URL + 'getdatosEscuelaAno', data=payload, headers=headers, verify=False)
         try:
             data = json.loads(request['d'])
             return data
         except:
             return []
-
 
     def _parse_schools(self):
         for school in self.schools:
@@ -88,7 +88,15 @@ class Parser(BaseParser):
 
     def _parse_school(self, school):
         courses = self._get_courses(school)
-        courses = [course for course in courses if (course['IDE_MODALIDAD'] == "S" and course["IDE_PER_MOD"] == int(self.term))]
+        if self.term.isdigit():
+            courses = [course for course in courses if (
+                course['IDE_MODALIDAD'] == "S" and course["IDE_PER_MOD"] == int(self.term))]
+        elif self.term == "V":
+            courses = [course for course in courses if (
+                course['IDE_MODALIDAD'] == "V" and course["IDE_PER_MOD"] == 1)]
+        else:
+            courses = []
+
         sections = self._parse_sections(courses)
         for courseCode in sections:
             course = sections[courseCode]
@@ -111,20 +119,21 @@ class Parser(BaseParser):
             num_credits = 0
 
         # Load core course fields
-        #self.ingestor['level'] = course[]
+        # self.ingestor['level'] = course[]
         self.ingestor['name'] = course['DSC_MATERIA']
         self.ingestor['description'] = ''
         self.ingestor['code'] = course['IDE_MATERIA']
         self.ingestor['num_credits'] = num_credits
         self.ingestor['department_name'] = course['DSC_DEPTO']
         self.ingestor['campus'] = course['DSC_SEDE']
-        
+
         created_course = self.ingestor.ingest_course()
-            
+
         if self.last_course \
            and created_course['code'] == course['IDE_MATERIA'] \
            and created_course['name'] != course['DSC_MATERIA']:
-            self.ingestor['section_name'] = course['IDE_MATERIA'] # TODO: Averiguar que es esto
+            # TODO: Averiguar que es esto
+            self.ingestor['section_name'] = course['IDE_MATERIA']
         self.last_course = created_course
 
         for meeting in section:
@@ -142,11 +151,12 @@ class Parser(BaseParser):
 
             self.ingestor['time_start'] = meeting['HINICIO']
             self.ingestor['time_end'] = meeting['HFIN']
-            self.ingestor['days'] = [Parser.DAY_MAP.get(meeting['NOM_DIA'], '')]
+            self.ingestor['days'] = [
+                Parser.DAY_MAP.get(meeting['NOM_DIA'], '')]
             self.ingestor['location'] = {
-                        'building': meeting['DSC_SEDE'],
-                        'room': ''
-                    }
+                'building': f'{meeting["DSC_SEDE"]} ({meeting["TIPO_CURSO"]})',
+                'room': ''
+            }
             self.ingestor.ingest_meeting(created_section)
 
     def start(self,
@@ -159,7 +169,7 @@ class Parser(BaseParser):
 
         # Default to hardcoded current year.
         years = {'2021', '2020'}
-        terms = {'1', '2'}
+        terms = {'1', '2', 'V'}
 
         years_and_terms = dict_filter_by_dict(
             {year: [term for term in terms] for year in years},

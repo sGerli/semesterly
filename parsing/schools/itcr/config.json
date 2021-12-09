@@ -6,7 +6,8 @@
   "course_code_regex": "([A-Z]{2}\\d{4})$",
   "terms": [
     "1",
-    "2"
+    "2",
+    "V"
   ],
   "granularity": 5,
   "ampm": false,
@@ -14,6 +15,7 @@
   "single_access": false,
   "active_semesters": {
     "2021": [
+      "V",
       "2",
       "1"
     ],
