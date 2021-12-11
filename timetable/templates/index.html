@@ -40,7 +40,7 @@
 <body>
 	<header class="down">
 		<div class="grid cf">
-			<img id="semesterly-logo" src="/static/img/logo2.0-32x32.png">
+			<img id="semesterly-logo" src="{% static 'img/logo2.0-32x32.png'%}">
 			<h1>HorarioTEC</h1>
 			<nav>
 				<div class="desktop-nav">
@@ -101,7 +101,7 @@
 								your name.</h4>
 						</div>
 						<div class="tutorial-half">
-							<img src="/static/img/splash/friends.png" alt="a sample ">
+							<img src="{% static 'img/splash/friends.png'%}" alt="a sample ">
 						</div>
 						<div class="tutorial-half">
 
@@ -116,7 +116,7 @@
 							<h4>Use the arrows to flip through all the possible configurations of your schedule.</h4>
 						</div>
 						<div class="tutorial-half">
-							<img src="/static/img/splash/pagination.gif" alt="a sample ">
+							<img src="{% static 'img/splash/pagination.gif'%}" alt="a sample ">
 						</div>
 					</div>
 				</div>
@@ -129,7 +129,7 @@
 								you! Only want 400 level Biology classes on Wednesday Afternoon? You got it!</h4>
 						</div>
 						<div class="tutorial-half">
-							<img src="/static/img/splash/advancedsearch.png" alt="a sample ">
+							<img src="{% static 'img/splash/advancedsearch.png'%}" alt="a sample ">
 						</div>
 						<div class="tutorial-half tutorial-text right desktop">
 							<h5>Filters</h5>
@@ -163,14 +163,18 @@
 				<h2>In The News</h2>
 				<h4>A platform built for students, by students</h4>
 				<div class="grid cf">
-					<div class="author" id="hub" style="background-image:url(/static/img/press_img/hub.png);"></div>
-					<div class="author" style="background-image:url(/static/img/press_img/jhu-logo.png);"></div>
-					<div class="author" style="background-image:url(/static/img/press_img/jhu-newsletter.png);"></div>
-					<div class="author" style="background-image:url(/static/img/press_img/odyssey-transparent.png);">
+					<div class="author" id="hub" style="background-image:url({% static 'img/press_img/hub.png'%});">
 					</div>
-					<div class="author" style="background-image:url(/static/img/press_img/technically-black.png);">
+					<div class="author" style="background-image:url({% static 'img/press_img/jhu-logo.png'%});"></div>
+					<div class="author" style="background-image:url({% static 'img/press_img/jhu-newsletter.png'%});">
 					</div>
-					<div class="author" style="background-image:url(/static/img/press_img/whiting.png);"></div>
+					<div class="author"
+						style="background-image:url({% static 'img/press_img/odyssey-transparent.png'%});">
+					</div>
+					<div class="author"
+						style="background-image:url({% static 'img/press_img/technically-black.png'%});">
+					</div>
+					<div class="author" style="background-image:url({% static 'img/press_img/whiting.png'%});"></div>
 				</div>
 			</div>
 			<div id="mobile" class="reason">
@@ -183,13 +187,13 @@
 						<ul>
 							<a href="https://jhu.semester.ly">
 								<div class="square-logo"
-									style="background-image: url(/static/img/school_logos/jhu-square.png);"></div>
+									style="background-image: url({% static 'img/school_logos/jhu-square.png'%});"></div>
 								<span>JHU</span>
 							</a>
 						</ul>
 					</div>
 					<div class="col-1-2">
-						<img src="/static/img/splash/iPhoneMockupCropped.png" alt="iPhone with Semester.ly open">
+						<img src="{% static 'img/splash/iPhoneMockupCropped.png'%}" alt="iPhone with Semester.ly open">
 					</div>
 				</div>
 			</div>
