@@ -168,7 +168,7 @@ class Parser(BaseParser):
         self.verbosity = verbosity
 
         # Default to hardcoded current year.
-        years = {'2021', '2020'}
+        years = {'2022', '2021', '2020'}
         terms = {'1', '2', 'V'}
 
         years_and_terms = dict_filter_by_dict(
