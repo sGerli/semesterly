@@ -2,66 +2,70 @@
 <!DOCTYPE html>
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-		{% block title_description_block %}{% endblock %}
-		<meta name="author" content="Stefano Gerli, Noah Presler, Rohan Das, Felix Zhu, Max Yeo, Eric Calder">
 
-		<!-- Facebook thumbnail info -->
-		{% block og_block %}{% endblock %}
-		
-		<link rel="shortcut icon" type="image/x-icon" href="{% static 'img/logo2.0-310x310.png' %}" />
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	{% block title_description_block %}{% endblock %}
+	<meta name="author" content="Stefano Gerli, Noah Presler, Rohan Das, Felix Zhu, Max Yeo, Eric Calder">
+	<meta property="og:image" content="{% static 'img/banner-horario-tec.jpg' %}" />
+	<!-- Facebook thumbnail info -->
+	{% block og_block %}{% endblock %}
 
-		<link href="https://fonts.googleapis.com/css?family=Palanquin:500|Roboto:100,300,400" rel="stylesheet" type='text/css'>
-		<link rel="stylesheet" href="{% static 'css/global.css'%}">
-		{% block css_block %}{% endblock %}
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<link rel="shortcut icon" type="image/x-icon" href="{% static 'img/logo2.0-310x310.png' %}" />
 
-		<!-- Global site tag (gtag.js) - Google Analytics -->
-		<script async src="https://www.googletagmanager.com/gtag/js?id=G-SZDMY4X32Q"></script>
-		<script>
+	<link href="https://fonts.googleapis.com/css?family=Palanquin:500|Roboto:100,300,400" rel="stylesheet"
+		type='text/css'>
+	<link rel="stylesheet" href="{% static 'css/global.css'%}">
+	{% block css_block %}{% endblock %}
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-SZDMY4X32Q"></script>
+	<script>
 		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
+		function gtag() { dataLayer.push(arguments); }
 		gtag('js', new Date());
 
 		gtag('config', 'G-SZDMY4X32Q');
-		</script>
-	</head>
-	<body>
-		<header class="down">
-			<div class="grid cf">
-				<img id="semesterly-logo" src="/static/img/logo2.0-32x32.png">
-				<h1>HorarioTEC</h1>
-				<nav>
-					<a href="https://jhu.semester.ly">JHU</a>
-					<a href="https://umd.semester.ly">UMD</a>
-					<a href="https://uoft.semester.ly">UofT</a>
-				</nav>
-			</div>
-		</header>
-		
-		{% block body_block %}{% endblock %}
+	</script>
+</head>
 
-		<footer>
-			<div class="grid cf">
-				<div class="col-1-1">
-					<ul>
-						<li><a href="https://www.facebook.com/semesterly/" target="_blank">
+<body>
+	<header class="down">
+		<div class="grid cf">
+			<img id="semesterly-logo" src="/static/img/logo2.0-32x32.png">
+			<h1>HorarioTEC</h1>
+			<nav>
+				<a href="https://jhu.semester.ly">JHU</a>
+				<a href="https://umd.semester.ly">UMD</a>
+				<a href="https://uoft.semester.ly">UofT</a>
+			</nav>
+		</div>
+	</header>
+
+	{% block body_block %}{% endblock %}
+
+	<footer>
+		<div class="grid cf">
+			<div class="col-1-1">
+				<ul>
+					<li><a href="https://www.facebook.com/semesterly/" target="_blank">
 							<i class="fa fa-facebook"></i>
 							<span>Like us on Facebook</span>
 						</a></li>
-						<li><a href="mailto:contact@semester.ly">
+					<li><a href="mailto:contact@semester.ly">
 							<i class="fa fa-at"></i>
 							<span>Email us at contact@semester.ly</span>
 						</a></li>
-					</ul>
-				</div>
-				<h6>COPYRIGHT © 2016 SEMESTERLY TECHNOLOGIES, LLC.</h6>
+				</ul>
 			</div>
-		</footer>
+			<h6>COPYRIGHT © 2016 SEMESTERLY TECHNOLOGIES, LLC.</h6>
+		</div>
+	</footer>
 
-      	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-		<script type="text/javascript" src="{% static 'js/splash.js'%}"></script>
-	</body>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script type="text/javascript" src="{% static 'js/splash.js'%}"></script>
+</body>
+
 </html>

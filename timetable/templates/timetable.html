@@ -3,49 +3,57 @@
 <!DOCTYPE html>
 
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-		<meta name="description" content="Crea tu horario TEC de manera sencilla.">
-		<meta name="author" content="Stefano Gerli Noah Presler, Rohan Das, Felix Zhu, Max Yeo, Eric Calder">
 
-		<!-- Facebook thumbnail info -->
-		<meta property="og:title" content="HorarioTEC"/>
-		<meta property="og:type" content="website" />
-		<meta property="og:site_name" content="HorarioTEC" />
-		<meta property="og:url" content="https://horario-tec.sger.li" />
-		<meta property="og:description" content="Crea tu horario TEC de manera sencilla." />
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="description" content="Crea tu horario TEC de manera sencilla.">
+  <meta name="author" content="Stefano Gerli, Noah Presler, Rohan Das, Felix Zhu, Max Yeo, Eric Calder">
 
-    <title>HorarioTEC</title>
-    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/logo2.0-310x310.png' %}" />
+  <!-- Facebook thumbnail info -->
+  <meta property="og:title" content="HorarioTEC" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="HorarioTEC" />
+  <meta property="og:url" content="https://horario-tec.sger.li" />
+  <meta property="og:description" content="Crea tu horario TEC de manera sencilla." />
+  <meta property="og:image" content="{% static 'img/banner-horario-tec.jpg' %}" />
 
-    <link rel="manifest" href="/manifest.json">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" rel="stylesheet" integrity="sha256-7s5uDGW3AHqw6xtJmNNtr+OBRJUlgkNJEo78P4b0yRw= sha512-nNo+yCHEyn0smMxSswnf/OnX6/KwJuZTlNZBjauKhTK0c+zT+q5JOCx0UFhXQ6rJR9jg6Es8gPuD2uZcYDLqSw==" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>HorarioTEC</title>
+  <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/logo2.0-310x310.png' %}" />
 
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/flat-ui/2.3.0/css/flat-ui.min.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/full-calendar.min.css'%}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/ball-clip-rotate-multiple.css'%}">
-    <link rel="manifest" href="{% static 'js/misc/manifest.json'%}">
+  <link rel="manifest" href="/manifest.json">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" rel="stylesheet"
+    integrity="sha256-7s5uDGW3AHqw6xtJmNNtr+OBRJUlgkNJEo78P4b0yRw= sha512-nNo+yCHEyn0smMxSswnf/OnX6/KwJuZTlNZBjauKhTK0c+zT+q5JOCx0UFhXQ6rJR9jg6Es8gPuD2uZcYDLqSw=="
+    crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css"
+    href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <link href="https://fonts.googleapis.com/css?family=Palanquin:500|Roboto:100,300,400" rel="stylesheet" type='text/css'>
-    {% render_bundle 'main' 'css' %}
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/flat-ui/2.3.0/css/flat-ui.min.css">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/full-calendar.min.css'%}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/ball-clip-rotate-multiple.css'%}">
+  <link rel="manifest" href="{% static 'js/misc/manifest.json'%}">
+
+  <link href="https://fonts.googleapis.com/css?family=Palanquin:500|Roboto:100,300,400" rel="stylesheet"
+    type='text/css'>
+  {% render_bundle 'main' 'css' %}
 
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SZDMY4X32Q"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SZDMY4X32Q"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-      gtag('config', 'G-SZDMY4X32Q');
-    </script>
-  </head>
-  <body>
-      <div class="page"></div>
-      <!-- footer -->
-      <!-- <footer class="footer navbar">
+    gtag('config', 'G-SZDMY4X32Q');
+  </script>
+</head>
+
+<body>
+  <div class="page"></div>
+  <!-- footer -->
+  <!-- <footer class="footer navbar">
           <div class="fb-like" data-href="https://www.facebook.com/semesterly/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"></div>
           <ul class="nav nav-pills">
             <li role="presentation"><a TARGET="_blank" href="mailto:contact@semester.ly?Subject=Semesterly">Contact us</a></li>
@@ -53,27 +61,28 @@
             <li role="presentation"><a TARGET="_blank" href="https://www.facebook.com/semesterly/">Facebook</a></li>
           </ul>
       </footer> -->
-      <div id="fb-root"></div>
+  <div id="fb-root"></div>
 
-      <script>(function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=580022102164877";
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));</script>
+  <script>(function (d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=580022102164877";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
 
-      <div id="semesterly-modal">
-      </div>
-      <script type="text/javascript">
-        var initData = "{{init_data|escapejs}}";
-      </script>
+  <div id="semesterly-modal">
+  </div>
+  <script type="text/javascript">
+    var initData = "{{init_data|escapejs}}";
+  </script>
 
-      <!-- Libraries -->
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <!-- Libraries -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
-      <!-- FINALLY COMPILED REACTJS -->
-      {% render_bundle 'main' 'js' %}
+  <!-- FINALLY COMPILED REACTJS -->
+  {% render_bundle 'main' 'js' %}
 
-    </body>
+</body>
+
 </html>
