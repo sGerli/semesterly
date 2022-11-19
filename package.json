@@ -43,7 +43,7 @@
     "lodash": "^4.17.4",
     "loose-envify": "^1.1.0",
     "moment": "^2.11.2",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "normalizr": "^3.2.3",
     "postcss-loader": "^2.0.5",
     "prop-types": "^15.5.10",
@@ -120,7 +120,7 @@
   "devDependencies": {
     "jest": "^20.0.1",
     "nock": "^9.0.13",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "regenerator-runtime": "^0.10.5",
     "sass-loader": "^6.0.3"
   },

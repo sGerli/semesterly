@@ -9,8 +9,8 @@ RUN apt-get install -y \
 	git \
 	curl
 
-# Install node 14.x
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+# Install node 12.x
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
 RUN apt-get install -y nodejs
 
 # This saves some build time by installing base requirements
