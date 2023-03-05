@@ -23,7 +23,7 @@ export const VALID_SCHOOLS = [
   "umich",
   "chapman",
   "salisbury",
-  "itcr"
+  "itcr",
 ];
 
 export const getSchoolSpecificInfo = (school) => {
@@ -149,21 +149,20 @@ export const getSchoolSpecificInfo = (school) => {
           1: "",
         },
       };
-    case 'itcr':
+    case "itcr":
       return {
-        primaryDisplay: 'name',
-        areasName: 'Areas',
-        departmentsName: 'Deparments',
-        levelsName: 'Levels',
-        timesName: 'Times',
-        courseRegex: '([A-Z]{2}\\d{4})',
+        primaryDisplay: "name",
+        areasName: "Areas",
+        departmentsName: "Deparments",
+        levelsName: "Levels",
+        timesName: "Times",
+        courseRegex: "([A-Z]{2}\\d{4})",
         campuses: {
-          'CAMPUS TECNOLOGICO CENTRAL CARTAGO': 'CAMPUS TECNOLOGICO CENTRAL CARTAGO',
-          'CENTRO ACADEMICO DE LIMON': 'CENTRO ACADEMICO DE LIMON',
-          'CENTRO ACADEMICO DE ALAJUELA': 'CENTRO ACADEMICO DE ALAJUELA',
-          'CAMPUS TECNOLOGICO LOCAL SAN JOSE': 'CAMPUS TECNOLOGICO LOCAL SAN JOSE',
-          'CAMPUS TECNOLOGICO LOCAL SAN CARLOS': 'CAMPUS TECNOLOGICO LOCAL SAN CARLOS'
-
+          "CAMPUS TECNOLOGICO CENTRAL CARTAGO": "CAMPUS TECNOLOGICO CENTRAL CARTAGO",
+          "CENTRO ACADEMICO DE LIMON": "CENTRO ACADEMICO DE LIMON",
+          "CENTRO ACADEMICO DE ALAJUELA": "CENTRO ACADEMICO DE ALAJUELA",
+          "CAMPUS TECNOLOGICO LOCAL SAN JOSE": "CAMPUS TECNOLOGICO LOCAL SAN JOSE",
+          "CAMPUS TECNOLOGICO LOCAL SAN CARLOS": "CAMPUS TECNOLOGICO LOCAL SAN CARLOS",
         },
       };
     default:
