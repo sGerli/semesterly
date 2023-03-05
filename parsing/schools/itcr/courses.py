@@ -20,6 +20,7 @@ from datetime import datetime
 
 
 import urllib3
+
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
@@ -35,15 +36,15 @@ class Parser(BaseParser):
         verbosity (TYPE): Description
     """
 
-    API_URL = 'https://tec-appsext.itcr.ac.cr/guiahorarios/escuela.aspx/'
+    API_URL = "https://tec-appsext.itcr.ac.cr/guiahorarios/escuela.aspx/"
     DAY_MAP = {
-        'LUNES': 'M',
-        'MARTES': 'T',
-        'MIERCOLES': 'W',
-        'JUEVES': 'R',
-        'VIERNES': 'F',
-        'SABADO': 'S',
-        'DOMINGO': 'U'
+        "LUNES": "M",
+        "MARTES": "T",
+        "MIERCOLES": "W",
+        "JUEVES": "R",
+        "VIERNES": "F",
+        "SABADO": "S",
+        "DOMINGO": "U",
     }
 
     def __new__(cls, *args, **kwargs):
@@ -52,35 +53,37 @@ class Parser(BaseParser):
         Returns:
             Parser
         """
-        new_instance = object.__new__(cls)
-        return new_instance
+        return object.__new__(cls)
 
     def __init__(self, **kwargs):
         """Construct itcr parser object."""
         self.schools = []
         self.last_course = {}
-        super(Parser, self).__init__('itcr', **kwargs)
+        super(Parser, self).__init__("itcr", **kwargs)
 
     def _get_schools(self):
-        headers = {
-            'Content-Type': 'application/json'
-        }
+        headers = {"Content-Type": "application/json"}
         request = self.requester.post(
-            Parser.API_URL + 'cargaEscuelas', data="{}", headers=headers, verify=False)
-        self.schools = json.loads(request['d'])
+            f"{Parser.API_URL}cargaEscuelas",
+            data="{}",
+            headers=headers,
+            verify=False,
+        )
+        self.schools = json.loads(request["d"])
 
     def _get_courses(self, school):
-        headers = {
-            'Content-Type': 'application/json'
-        }
-        payload = json.dumps(
-            {'escuela': school['IDE_DEPTO'], 'ano': self.year})
+        headers = {"Content-Type": "application/json"}
+        payload = json.dumps({"escuela": school["IDE_DEPTO"], "ano": self.year})
         request = self.requester.post(
-            Parser.API_URL + 'getdatosEscuelaAno', data=payload, headers=headers, verify=False)
+            f"{Parser.API_URL}getdatosEscuelaAno",
+            data=payload,
+            headers=headers,
+            verify=False,
+        )
         try:
-            data = json.loads(request['d'])
+            data = json.loads(request["d"])
             return data
-        except:
+        except Exception:
             return []
 
     def _parse_schools(self):
@@ -90,11 +93,20 @@ class Parser(BaseParser):
     def _parse_school(self, school):
         courses = self._get_courses(school)
         if self.term.isdigit():
-            courses = [course for course in courses if (
-                course['IDE_MODALIDAD'] == "S" and course["IDE_PER_MOD"] == int(self.term))]
+            courses = [
+                course
+                for course in courses
+                if (
+                    course["IDE_MODALIDAD"] == "S"
+                    and course["IDE_PER_MOD"] == int(self.term)
+                )
+            ]
         elif self.term == "V":
-            courses = [course for course in courses if (
-                course['IDE_MODALIDAD'] == "V" and course["IDE_PER_MOD"] == 1)]
+            courses = [
+                course
+                for course in courses
+                if (course["IDE_MODALIDAD"] == "V" and course["IDE_PER_MOD"] == 1)
+            ]
         else:
             courses = []
 
@@ -106,7 +118,7 @@ class Parser(BaseParser):
     def _parse_sections(self, courses):
         res = {}
         for course in courses:
-            section_code = course['IDE_MATERIA'] + str(course['IDE_GRUPO'])
+            section_code = course["IDE_MATERIA"] + str(course["IDE_GRUPO"])
             if res.get(section_code, None) is None:
                 res[section_code] = []
             res[section_code].append(course)
@@ -115,37 +127,39 @@ class Parser(BaseParser):
 
     def _load_ingestor(self, course, section):
         try:
-            num_credits = float(course['CAN_CREDITOS'])
-        except:
+            num_credits = float(course["CAN_CREDITOS"])
+        except Exception:
             num_credits = 0
 
         # Load core course fields
-        self.ingestor['name'] = course['DSC_MATERIA']
-        self.ingestor['description'] = ''
-        self.ingestor['code'] = course['IDE_MATERIA']
-        self.ingestor['num_credits'] = num_credits
-        self.ingestor['department_name'] = course['DSC_DEPTO']
-        self.ingestor['campus'] = course['DSC_SEDE']
+        self.ingestor["name"] = course["DSC_MATERIA"]
+        self.ingestor["description"] = ""
+        self.ingestor["code"] = course["IDE_MATERIA"]
+        self.ingestor["num_credits"] = num_credits
+        self.ingestor["department_name"] = course["DSC_DEPTO"]
+        self.ingestor["campus"] = course["DSC_SEDE"]
 
         created_course = self.ingestor.ingest_course()
 
-        if self.last_course \
-           and created_course['code'] == course['IDE_MATERIA'] \
-           and created_course['name'] != course['DSC_MATERIA']:
-            self.ingestor['section_name'] = course['IDE_MATERIA']
+        if (
+            self.last_course
+            and created_course["code"] == course["IDE_MATERIA"]
+            and created_course["name"] != course["DSC_MATERIA"]
+        ):
+            self.ingestor["section_name"] = course["IDE_MATERIA"]
         self.last_course = created_course
 
         for meeting in section:
             # Load core section fields
-            self.ingestor['section_code'] = str(meeting["IDE_GRUPO"])
-            self.ingestor['instrs'] = meeting["NOM_PROFESOR"]
+            self.ingestor["section_code"] = str(meeting["IDE_GRUPO"])
+            self.ingestor["instrs"] = meeting["NOM_PROFESOR"]
 
-            self.ingestor['section_type'] = meeting["TIPO_CURSO"]
+            self.ingestor["section_type"] = meeting["TIPO_CURSO"]
 
             # We have no data on the capacity
-            self.ingestor['size'] = 1
-            self.ingestor['enrollment'] = 0
-            self.ingestor['waitlist'] = 0
+            self.ingestor["size"] = 1
+            self.ingestor["enrollment"] = 0
+            self.ingestor["waitlist"] = 0
 
             created_section = self.ingestor.ingest_section(created_course)
 
@@ -154,16 +168,14 @@ class Parser(BaseParser):
             self.ingestor["date_start"] = datetime.now()
             self.ingestor["date_end"] = datetime.now()
 
-            self.ingestor['time_start'] = meeting['HINICIO']
-            self.ingestor['time_end'] = meeting['HFIN']
-            self.ingestor['days'] = [
-                Parser.DAY_MAP.get(meeting['NOM_DIA'], '')
-            ]
+            self.ingestor["time_start"] = meeting["HINICIO"]
+            self.ingestor["time_end"] = meeting["HFIN"]
+            self.ingestor["days"] = [Parser.DAY_MAP.get(meeting["NOM_DIA"], "")]
             course_campus = f'{meeting["DSC_SEDE"]} ({meeting["TIPO_CURSO"]})'
-            self.ingestor['location'] = {
-                'campus': course_campus,
-                'building': course_campus,
-                'room': ''
+            self.ingestor["location"] = {
+                "campus": course_campus,
+                "building": course_campus,
+                "room": "",
             }
             self.ingestor.ingest_meeting(created_section)
 
@@ -172,25 +184,24 @@ class Parser(BaseParser):
         verbosity=3,
         textbooks=False,
         departments_filter=None,
-        years_and_terms_filter=None
+        years_and_terms_filter=None,
     ):
         """Start parse."""
         self.verbosity = verbosity
 
         # Default to hardcoded current year.
-        years = {'2023', '2022', '2021', '2020'}
-        terms = {'1', '2', 'V'}
+        years = {"2023", "2022", "2021", "2020"}
+        terms = {"1", "2", "V"}
 
         years_and_terms = dict_filter_by_dict(
-            {year: [term for term in terms] for year in years},
-            years_and_terms_filter
+            {year: list(terms) for year in years}, years_and_terms_filter
         )
 
         for year, terms in list(years_and_terms.items()):
-            self.ingestor['year'] = year
+            self.ingestor["year"] = year
             self.year = year
             for term in terms:
-                self.ingestor['term'] = term
+                self.ingestor["term"] = term
                 self.term = term
                 self._get_schools()
                 self._parse_schools()
